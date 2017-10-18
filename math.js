@@ -8,10 +8,9 @@ var m = {
 	e:2.718281828459045,
 	E:2.718281828459045,
 	toDecimal:function(givenArray){
-		givenArray[2] = givenArray[0]/givenArray[1];
-		return givenArray[2];
+		return givenArray[0]/givenArray[1];
 	},
-	toFraction:function(givenDecimal){
+	toFraction:function(givenDecimal){ // lmao todo.
 		var number1=givenDecimal;
 		var timesTen=0;
 		while(number1%1!==0){
@@ -23,17 +22,17 @@ var m = {
 		console.log(timesTen);
 	},
 	VtoXY:function(magnitude,angle){
-		var toRe= [];
-		toRe[0] = this.cos(angle)*magnitude;
-		toRe[1] = this.sin(angle)*magnitude;
+		var toRe= {};
+		toRe.x = this.cos(angle)*magnitude;
+		toRe.y = this.sin(angle)*magnitude;
 		return toRe;
 	},
 	VtoMA:function(x,y){
 		var toRe= [];
-		toRe[0] = this.sqrt(this.pow(x,2)+this.pow(y,2));
-		toRe[1] = (Math.atan(y/x)*180)/this.pi;
-		if(x<0){toRe[1]+=180;}
-		if(toRe[1]<0){toRe[1]+=360}
+		toRe.mag = this.sqrt(this.pow(x,2)+this.pow(y,2));
+		toRe.angle = (Math.atan(y/x)*180)/this.pi;
+		if(x<0){toRe.angle+=180;}
+		if(toRe[1]<0){toRe.angle+=360}
 		return toRe;
 	},
 	simplify:function(givenArray){

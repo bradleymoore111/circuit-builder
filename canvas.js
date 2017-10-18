@@ -3,7 +3,7 @@ var width, height;
 var margin_x = 40;
 var margin_y = 40;
 
-var entities = [],wires = []; // Possible TODO: make an array for every single type of entity.
+var wires = []; // Possible TODO: make an array for every single type of entity.
 
 function init(){
 	canvas = document.getElementById("main-canvas");
@@ -46,5 +46,42 @@ function drawGrid(){
 function drawEntities(){
 	for(var i=0;i<wires.length;i++){
 		drawWire( wires[i] );
+
+		// draw entities on the wire.
+		var length = wires[i].entities.length;
+
+		// TODO: if length is greater than the number of elements that could fit on it (kinda long math to do).
+		for(var j=0;j<length;j++){
+			var ent = wires[i].entities[j];
+
+			// figure out position.
+			var vector = m.VtoMA( wires[i].x - wires[i].a, wires[i].y - wires[i].b );
+
+			vector.mag = vector.mag * (j + 1) / ( length + 1 );
+			var angle = vector.angle;
+
+			var vector = m.VtoXY( vector.mag, vector.angle ); // new x y location from (a,b) of the line.
+
+			var x = vector.x + wires[i].a;
+			var y = vector.y + wires[i].b;
+
+			c.translate( x, y );
+			c.rotate( angle * m.pi / 180 );
+
+			c.beginPath();
+			c.rect( -10, -10, 20, 20 );
+			c.fill();
+
+			c.rotate( -angle * m.pi / 100 );
+			c.setTransform(1, 0, 0, 1, 0, 0);
+
+			// console.log( 'drawing ' + (vector.x + wires[i].a) + ',' + (vector.y + wires[i].b) );
+			// drawCircle( vector.x + wires[i].a, vector.y + wires[i].b, 5, 'rgb(0,0,255)' );
+
+			// check temporary at the end.
+			if( ent.temp ){
+				wires[i].entities.splice( j, 1 );
+			}
+		}
 	}
 }

@@ -14,6 +14,18 @@ function drawWire( ent ){
 	c.stroke();
 }
 
+function drawCircle( x, y, r, style ){
+	if( ! style ){
+		style = 'rgb(0, 0, 0)';
+	}
+
+	c.beginPath();
+    c.arc( x, y, r, 0, 2*Math.PI );
+    c.fillStyle = style;
+    c.fill();
+    c.closePath();
+}
+
 // Returns x value of the mouse with respect to the canvas.
 function eventX( event ){
 	var dot, eventDoc, doc, body, pageX, pageY;

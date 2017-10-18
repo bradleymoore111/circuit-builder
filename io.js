@@ -144,6 +144,7 @@ function addEntity( element ){
                 b: wireY,
                 x: x,
                 y: y,
+                entities: [],
             };
 
             document.onmouseup = null;
@@ -165,8 +166,6 @@ function addEntity( element ){
                 return;
             }
 
-            resetCanvas();
-
             // Check for nearby wires.
             // Oh boy.
 
@@ -184,7 +183,19 @@ function addEntity( element ){
                 }
             }
 
+            if( shortest > 40 || loc == -1 ){
+                return resetCanvas();
+            }
+
+            // Imagine adding it temporarily.
+            wires[loc].entities[wires[loc].entities.length] = {
+                temp:true,
+                type:'resistor' // any other info? value maybe?
+            }
+
+        
             // Generate the resistor on top of the line.
+
 
         }
     }
